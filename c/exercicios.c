@@ -217,10 +217,41 @@ int inverte(int param1, int param2, int matriz[MAX][MAX], int type) {
 }
 
 /**
+ * Linhas
+ */
+void linhas(int matriz[MAX][MAX]) {
+
+    int linha1, linha2;    
+    puts("\tDigite os números das linhas que quer inverter:");
+    puts("\t1º Linha:");
+    scanf("%d", &linha1);
+
+    puts("\t2º Linha:");
+    scanf("%d", &linha2);
+
+    inverte_linhas(linha1, linha2, matriz);
+}
+
+/**
+ * colunas
+ */
+void linhas(int matriz[MAX][MAX]) {
+
+    int coluna1, coluna2;    
+    puts("\tDigite os números das colunas que quer inverter:");
+    puts("\t1º coluna:");
+    scanf("%d", &coluna1);
+
+    puts("\t2º coluna:");
+    scanf("%d", &coluna2);
+
+    inverte_linhas(coluna1, coluna2, matriz);
+}
+
+/**
  * Programa
  */
-void programa(int matriz[MAX][MAX]) {
-    /*puts("IÉIÉ, pegadinha do malandro");*/
+/*void programa(int matriz[MAX][MAX]) {
 
     if(!inverte(2, 4, matriz, LXL))
         puts("Parâmetros inválidos para inverter linhas");
@@ -234,7 +265,7 @@ void programa(int matriz[MAX][MAX]) {
     if(!inverte(1, 4, matriz, LXC))
         puts("Parâmetros inválidos para inverter linha com coluna");
 
-}
+}*/
 
 
 int main() {
@@ -251,14 +282,17 @@ int main() {
         cabecalho(matriz);
 
         puts("\t Escolha uma opção:\n");
-        puts("\t[ 1 ] Realiza programa");
-        puts("\t[ 2 ] Sair do programa");
+        puts("\t[ 1 ] Inverte linhas");
+        puts("\t[ 2 ] Inverte colunas");
+        puts("\t[ 3 ] Inverte diagonais");
+        puts("\t[ 4 ] Inverte linha com columa");
+        puts("\t[ 5 ] Sair do programa");
 
         c = getchar();
 
         switch (c) {
         case '1':
-            programa(matriz);
+            linhas();
             break;
         case '2':
             encerra();
