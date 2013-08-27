@@ -235,7 +235,7 @@ void linhas(int matriz[MAX][MAX]) {
 /**
  * colunas
  */
-void linhas(int matriz[MAX][MAX]) {
+void colunas(int matriz[MAX][MAX]) {
 
     int coluna1, coluna2;    
     puts("\tDigite os números das colunas que quer inverter:");
@@ -245,7 +245,14 @@ void linhas(int matriz[MAX][MAX]) {
     puts("\t2º coluna:");
     scanf("%d", &coluna2);
 
-    inverte_linhas(coluna1, coluna2, matriz);
+    inverte_colunas(coluna1, coluna2, matriz);
+}
+
+/**
+ * diagonais
+ */
+void diagonais(int matriz[MAX][MAX]) {
+    inverte_diagonais(0, 0, matriz);
 }
 
 /**
@@ -291,12 +298,21 @@ int main() {
         c = getchar();
 
         switch (c) {
-        case '1':
-            linhas();
-            break;
-        case '2':
-            encerra();
-            break;
+            case '1':
+                linhas(matriz);
+                break;
+            case '2':
+                colunas(matriz);
+                break;
+            case '3':
+                diagonais(matriz);
+                break;
+            case '4':
+                linha_coluna(matriz);
+                break;
+            case '5':
+                encerra();
+                break;
         }
 
         para_menu();
