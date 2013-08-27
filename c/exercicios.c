@@ -15,6 +15,11 @@
 
 #define MAX 4
 
+#define LXL 0
+#define CXC 1
+#define DXD 2
+#define LXC 3
+
 /**
  * Imprime matriz
  */
@@ -112,18 +117,10 @@ int valida_parametros(int param1, int param2) {
 }
 
 /**
- * Inverte linhas da matriz
- *
+ * Inverte linhas
  */
-int inverte_linhas(int linha1, int linha2, int matriz[MAX][MAX]) {
-
-    if(!valida_parametros(linha1, linha2))
-        return 0;
-
-    linha1--;
-    linha2--;
-
-    printf("Iniciando a inversão das linhas nº %d com a nº %d\n", linha1, linha2);
+void inverte_linhas(int linha1, int linha2, int matriz[MAX][MAX]) {
+    printf("Iniciando a inversão das linhas nº %d com a nº %d\n", linha1 + 1, linha2 + 1);
 
     int aux, i;
 
@@ -131,6 +128,84 @@ int inverte_linhas(int linha1, int linha2, int matriz[MAX][MAX]) {
         aux = matriz[linha1][i];
         matriz[linha1][i] = matriz[linha2][i];
         matriz[linha2][i] = aux;
+    }
+}
+
+/**
+ * Inverte colunas
+ */
+void inverte_colunas(int coluna1, int coluna2, int matriz[MAX][MAX]) {
+    printf("Iniciando a inversão das colunas nº %d com a nº %d\n", coluna1 + 1, coluna2 + 1);
+
+    int aux, i;
+
+    for(i = 0; i < MAX; i++) {
+        aux = matriz[i][coluna1];
+        matriz[i][coluna1] = matriz[i][coluna2];
+        matriz[i][coluna2] = aux;
+    }
+}
+
+/**
+ * Inverte diagonais
+ */
+void inverte_diagonais(int matriz[MAX][MAX]) {
+    printf("Iniciando a inversão das diagonais:\n");
+
+    int aux, i, j = (MAX - 1), k = 0;
+
+    for(i = 0; i < MAX; i++) {
+        aux = matriz[i][i];
+        matriz[i][i] = matriz[k][j];
+        matriz[k][j] = aux;
+        j--;
+        k++;
+    }
+}
+
+/**
+ * Inverte linha com coluna
+ */
+void inverte_lin_col(int linha, int coluna, int matriz[MAX][MAX]) {
+    printf("Iniciando a inversão da linha nº %d com a coluna nº %d\n", linha + 1, coluna + 1);
+
+    int aux, i, max = (MAX - 1);
+
+    for(i = 0; i < MAX; i++) {
+        if((linha == (max - i)) && (i == coluna))
+            continue;
+
+        aux = matriz[linha][i];
+        matriz[linha][i] = matriz[max - i][coluna];
+        matriz[max - i][coluna] = aux;
+    }
+}
+
+/**
+ * Inverter
+ *
+ */
+int inverte(int param1, int param2, int matriz[MAX][MAX], int type) {
+
+    if(type != DXD && !valida_parametros(param1, param2))
+        return 0;
+
+    param1--;
+    param2--;
+
+    switch (type) {
+    case LXL:
+        inverte_linhas(param1, param2, matriz);
+        break;
+    case CXC:
+        inverte_colunas(param1, param2, matriz);
+        break;
+    case DXD:
+        inverte_diagonais(matriz);
+        break;
+    case LXC:
+        inverte_lin_col(param1, param2, matriz);
+        break;
     }
 
     puts("\n\tResultado da inversão\n");
@@ -142,21 +217,22 @@ int inverte_linhas(int linha1, int linha2, int matriz[MAX][MAX]) {
 }
 
 /**
- * Inverte colunas
- */
-int inverte_colunas(int coluna1, int coluna2, int matriz[MAX][MAX]) {
-
-}
-
-/**
  * Programa
  */
 void programa(int matriz[MAX][MAX]) {
     /*puts("IÉIÉ, pegadinha do malandro");*/
 
-    inverte_linhas(2, 4, matriz);
+    if(!inverte(2, 4, matriz, LXL))
+        puts("Parâmetros inválidos para inverter linhas");
 
+    if(!inverte(3, 4, matriz, CXC))
+        puts("Parâmetros inválidos para inverter colunas");
 
+    if(!inverte(0, 0, matriz, DXD))
+        puts("Parâmetros inválidos para inverter diagonais");
+
+    if(!inverte(1, 4, matriz, LXC))
+        puts("Parâmetros inválidos para inverter linha com coluna");
 
 }
 
